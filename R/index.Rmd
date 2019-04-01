@@ -1,0 +1,46 @@
+---
+title: "Explorando el Transcriptoma con Datos de Expresi&oacute;n Gen&eacute;tica"
+author: "Yered Pita-Juárez"
+output: html_document
+layout: page
+---
+# Introducci&oacute;n a R & RStudio 
+
+* [Parte I](Intro_R_and_RStudio.pdf)
+* [Parte II](cRash_couRse.pdf)
+* [Parte III](cRash_couRse_2.pdf)
+* [Paquetes y Datos](BioC_packages.html)
+
+
+# Introducci&oacute;n a la Expresi&oacute;n Gen&eacute;tica  
+* [Expresi&oacute;n Gen&eacute;tica](Intro_Gene_Expression.pdf)
+* [Microarreglos](Intro_Microarrays.pdf)
+* [Datos de Microarreglos](Gene_Expression.pdf)
+* [Prueba de t](hypothesis_testing.pdf)
+* [ALL](ALL.pdf)
+* [GSEA](GSEA.pdf)
+
+# R scripts
+* [Datos de Expresi&oacute;n Gen&eacute;tica](ex00.R)
+* [Anotaci&oacute;n](ex01.R)
+* [GEO](ex03.R)
+* [ALL](ex04.R)
+* [GSEA](ex06.R)
+
+# Videos y Animaciones
+* [Microarreglos (Video)](http://youtu.be/0Hj3f7vQFZU) 
+* [Microarreglos (Animaci&oacute;n)](http://learn.genetics.utah.edu/content/labs/microarray/)
+
+# Proyecto Final
+* [Registro en GEO (GSE28146)](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE28146)
+* [Art&iacute;culo](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3163806/)
+* [Datos](Alz.RDS)
+* [Procesando Datos (Script)](Alz_processing.R)
+* [An&aacute;lisis (Script)](Alz_DE.R)  
+* [Final](final.pdf)
+
+### Contactos 
+Yered Pita-Juarez  
+<ypitajuarez@fas.harvard.edu>  
+Ingrid Rodriguez Gutierrez  
+<ingridrdz20@gmail.com>
