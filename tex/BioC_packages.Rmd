@@ -1,0 +1,32 @@
+---
+title: "Paquetes de Bioconductor y Datos"
+author: "Yered Pita-Juárez"
+output: html_document
+layout: page
+---
+
+## Paquetes de Bioconductor
+
+Los siguientes comandos son para instalar los paquetes de Bioconductor que vamos a usar el resto de la clase. Copia el codigo y ejecutalo en tu consola.
+```
+# Instalar el paquete Biobase
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+# Instalar paquetes de Bioconductor
+biocLite(c("affy","oligo","GEOquery","rae230a.db",
+           "AnnotationDbi","biomaRt","ALL","genefilter",
+           "multtest","hgu95av2.db","GSEABase","KEGG.db"))
+```
+* Necesitas una conexion a internet para poder instalar estos paquetes
+* Puede ser algo tardado. No te deseperes!
+* Si en algun momento ves este mensaje  
+<img src="figures/bioC_update_prompt.PNG" alt="" style="width: 500px;"/>
+* Esto quiere decir que necesitas actualizar algun paquete de R, presiona `a` y despues `Enter` para continuar con la instalacion  
+<img src="figures/bioC_update_ans.PNG" alt="" style="width: 500px;"/>
+
+## Datos
+Descarga los siguientes archivos de datos
+
+* [CEL Files](https://dl.dropboxusercontent.com/u/21912429/Medellin/celfiles.zip)
+* [maPooling](https://www.dropbox.com/s/6afq28c5o1ozb6w/maPooling.RData)
+

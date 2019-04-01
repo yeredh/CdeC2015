@@ -1,0 +1,623 @@
+\documentclass{beamer}
+\usetheme{Boadilla} 
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{} 
+%\useoutertheme{infolines} 
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\setbeamertemplate{frametitle continuation}{} 
+\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{bm}
+\usepackage{epsfig}
+
+\usepackage{amsmath}
+\usepackage{xcolor,colortbl}
+
+\usepackage{multicol}
+\usepackage{wasysym}
+
+\usepackage{hyperref}
+\usepackage{float}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=1pt,
+      line width=0.5pt,
+      font=\scriptsize\sffamily
+    ](key) {#1\strut}
+  ;
+}
+
+% deal with spaces in absolute paths
+
+\usepackage[space]{grffile}
+\graphicspath{{C:/Users/Yered/Dropbox/Harvard/Winter 2014/CdeC/Slides/Introduction/figures/}}
+
+\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+
+
+\begin{document}
+%\title[Explorando el Transcriptoma]{Explorando el Transcriptoma con Datos de Expresi\'{o}n Gen\'{e}tica}
+%\author{Yered Pita-Ju\'{a}rez}
+%\institute[CdeC M\'{e}rida]{}
+%\date{??/??/2015}
+\title[Introducción a R \& RStudio]{Explorando el Transcriptoma con Datos de Expresi\'{o}n Gen\'{e}tica\\
+\vspace{0.5cm}
+Introducción a R \& RStudio}
+\author{Yered Pita-Ju\'{a}rez}
+\institute[CdeC M\'{e}rida]{}
+\date{6/1/2015}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Caracteres}
+\begin{itemize}
+\item Define una variable de caracteres usando apostrofes
+\item De otra manera R busca una variable definida con ese nombre
+\begin{verbatim}
+> m = "Manzanas"
+> m
+[1] "Manzanas"
+> n = peras
+Error: object 'peras' not found
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Caracteres}
+\begin{itemize}
+\item No podemos hacer cálculos con variables de caracteres
+\begin{verbatim}
+> m+2
+Error in m + 2 : non-numeric argument to binary operator
+\end{verbatim}
+\item Pero tenemos operaciones para manipular caracteres
+\begin{verbatim}
+> toupper(m)
+[1] "MANZANAS"
+> tolower(m)
+[1] "manzanas"
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Vectores}
+\begin{itemize}
+\item Se puede crear un vector con la función \verb=c()=
+\begin{verbatim}
+> vec1 = c(1,4,6,8,10)
+> vec1
+[1] 1 4 6 8 10
+\end{verbatim}
+\item Los elementos de un vector se pueden acceder y modificar por su índice \verb=[i]=
+\begin{verbatim}
+> vec1[5]
+[1] 10
+> vec1[3] = 12
+> vec1
+[1] 1 4 12 8 10
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Vectores}
+\begin{itemize}
+\item El comando \verb=seq= es una forma de crear un vector a partir de una secuencia
+\begin{verbatim}
+> vec2 = seq(from=0, to=1, by=0.25)
+> vec2
+[1] 0.00 0.25 0.50 0.75 1.00
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Matrices}
+\begin{itemize}
+\item Son vectores con 2 dimensiones
+\begin{verbatim}
+mat=matrix(data=c(9,2,3,4,5,6),ncol=3)
+> mat
+[,1] [,2] [,3]
+[1,] 9 3 5
+[2,] 2 4 6
+\end{verbatim}
+\item \verb=data= contiene las entradas de la matrix, \verb=ncol= especifica el número de columnas y \verb=nrow= especifica el número de hileras
+\item Los elementos de una matriz se acceden por su posición \texttt{[fila,columna]}
+\begin{verbatim}
+> mat[1,2]
+[1] 3
+\end{verbatim}
+%\item Para acceder a toda una hilera
+%\begin{verbatim}
+%> mat[2,]
+%[1] 2 4 6
+%\end{verbatim}
+%\item Para acceder a toda una columna
+%\begin{verbatim}
+%> mat[,1]
+%[1] 9 2
+%\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Matrices}
+\begin{itemize}
+\item Para acceder a toda una hilera
+\begin{verbatim}
+> mat[2,]
+[1] 2 4 6
+\end{verbatim}
+\item Para acceder a toda una columna
+\begin{verbatim}
+> mat[,1]
+[1] 9 2
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Data Frames}
+\begin{itemize}
+\item Una matriz con columnas etiquetadas
+\begin{verbatim}
+> t = data.frame(x = c(11,12,14),y = c(19,20,21),
+			    z = c(10,9,7))
+> t
+   x  y  z
+1 11 19 10
+2 12 20  9
+3 14 21  7
+\end{verbatim}
+\item Las columnas se pueden acceder por su nombre
+\begin{verbatim}
+> mean(t$z)
+[1] 8.666667
+> mean(t[["z"]])
+[1] 8.666667
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Data Frames}
+\begin{block}{Ejercicio}
+\begin{itemize}
+\item Crea un script para crear 3 vectores (\texttt{x1,x2,x3}) con 100 números aleatorios usando \verb=rnorm=
+\item Crea un \texttt{data frame} llamado \verb=t= con 3 columnas (\texttt{a,b,c}) que contengan respectivamente \texttt{x1,x1+x2,x1+x2+x3}
+\item Usa las siguientes functiones \texttt{plot(t)} y \texttt{summary(t)}
+\item ¿Cómo interpretarías los resultados?
+\end{itemize}
+\end{block}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.11]{laptop.jpeg}
+\end{figure}
+\end{frame}
+
+%\begin[fragile]{frame}{Data Frames}
+%\begin{block}{Ejercicio}
+%\begin{itemize}
+%\item Crea un script para crear 3 vectores (\texttt{x1,x2,x3}) con 100 números aleatorios usando \verb=rnorm=
+%\item Crea un \texttt{data frame} llamado \verb=t= con 3 columnas (\texttt{a,b,c}) que contengan respectivamente %\texttt{x1,x1\+x2,x1\+x2\+x3})
+%\item Usa las siguientes functiones \texttt{plot(t)} y \texttt{summary(t)}
+%\item ¿Cómo interpretarías los resultados?
+%\end{itemize}
+%\end{block}
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.15]{laptop.jpeg}
+%\end{figure}
+%\end{frame}
+
+\begin{frame}[fragile]{Listas}
+\begin{itemize}
+\item Una coleccción de objectos
+\item Si es lista de vectores, los vectores no tienen que ser del mismo tamaño
+\item Crear una lista 
+\begin{verbatim}
+> L = list(one=1, two=c(1,2),five=seq(0, 1, length=5))
+> L
+$one
+[1] 1
+$two
+[1] 1 2
+$five
+[1] 0.00 0.25 0.50 0.75 1.00
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Listas}
+\begin{itemize}
+\item Nombres de los componentes de la lista
+\begin{verbatim}
+names(L)
+[1] "one" "two" "five"
+\end{verbatim} 
+\item Operaciones con los elementos de la lista
+\begin{verbatim}
+> L$five + 10
+[1] 10.00 10.25 10.50 10.75 11.00
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Listas}
+\begin{itemize}
+\item Las listas pueden contener differentes tipos de variables
+\begin{verbatim}
+Lst <- list(nombre="Jose", esposa="Maria",
+            no.hijos=3,edad.hijos=c(4,7,9))
+\end{verbatim}
+\item Podemos acceder a los componentes de la lista usando el nombre del componente o el indice
+\begin{columns}
+    \begin{column}{0.45\textwidth}
+\begin{verbatim}
+> Lst$nombre
+[1] "Jose"
+> Lst$esposa
+[1] "Maria"
+> Lst$edad.hijos
+[1] 4 7 9
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+\begin{verbatim}
+> Lst[[1]]
+[1] "Jose"
+> Lst[[2]]
+[1] "Maria"
+> Lst[[4]]
+[1] 4 7 9
+\end{verbatim}
+    \end{column}
+\end{columns}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Listas}
+\begin{itemize}
+\item Si uno de los componentes tiene varios elementos, podemos accederlos usando el indice correspondiente
+\begin{verbatim}
+> Lst$edad.hijos[1]
+[1] 4
+> Lst[[4]][1]
+[1] 4
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Listas}
+\begin{block}{Ejercicio}
+Crea una lista con tu siguientes datos
+\begin{itemize}
+\item Nombre
+\item Apellido
+\item Edad
+\item Escuela
+\end{itemize}
+\end{block}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.1]{laptop.jpeg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{NA}
+\begin{itemize}
+\item Trabajando con datos reales, a veces tenemos observaciones que no están disponibles
+\item R representa estos datos faltantes con el valor \verb=NA=
+\begin{verbatim}
+> obs=c(1,2,NA)
+\end{verbatim}
+\item En general, no es posible calcular estadisticas de datos incompletos
+\begin{verbatim}
+> mean(obs)
+[1] NA
+\end{verbatim}
+\item Sin embargo, podemos optar por ignorar los datos que nos hacen falta
+\begin{verbatim}
+> mean(obs,na.rm=TRUE)
+[1] 1.5
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item Tenemos dos \texttt{data frames} con datos acerca de unas ratas: cada uno con un ID diferente para cada rata
+\end{itemize}
+\footnotesize
+\begin{verbatim}
+ratas <- data.frame(id = paste0("rat",1:10),  
+                    sexo = factor(rep(c("F","M"),each=5)),
+                    peso = c(2,4,1,11,18,12,7,12,19,20),
+                    longitud = c(100,105,115,130,95,150,165,180,190,175))
+> ratas
+      id sexo peso longitud
+1   rat1    F    2      100
+2   rat2    F    4      105
+3   rat3    F    1      115
+4   rat4    F   11      130
+5   rat5    F   18       95
+6   rat6    M   12      150
+7   rat7    M    7      165
+8   rat8    M   12      180
+9   rat9    M   19      190
+10 rat10    M   20      175
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item Tenemos dos \texttt{data frames} con datos acerca de unas ratas: cada uno con un ID diferente para cada rata
+\end{itemize}
+\footnotesize
+\begin{verbatim}
+ratasTabla <- data.frame(id = paste0("rat",c(6,9,7,3,5,1,10,4,8,2)),
+                         IDsecreto = 1:10)
+> ratasTabla
+      id IDsecreto
+1   rat6         1
+2   rat9         2
+3   rat7         3
+4   rat3         4
+5   rat5         5
+6   rat1         6
+7  rat10         7
+8   rat4         8
+9   rat8         9
+10  rat2        10
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item Queremos ordenar el \texttt{data frame} \verb=ratas= usando el \texttt{IDsecreto} de \verb=ratasTabla=.
+\item \verb=match= te da por cada elemento del primer vector, el indice que corresponde al segundo vector
+\begin{verbatim}
+> match(ratasTabla$id, ratas$id)
+ [1]  6  9  7  3  5  1 10  4  8  2
+\end{verbatim}
+\item El \texttt{data frame} que quieres reordenar es el segundo argumento de \verb=match=
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item El \texttt{data frame} que quieres reordenar es el segundo argumento de \verb=match=
+\footnotesize
+\begin{verbatim}
+> ratas[match(ratasTabla$id, ratas$id),] 
+      id sexo peso longitud
+6   rat6    M   12      150
+9   rat9    M   19      190
+7   rat7    M    7      165
+3   rat3    F    1      115
+5   rat5    F   18       95
+1   rat1    F    2      100
+10 rat10    M   20      175
+4   rat4    F   11      130
+8   rat8    M   12      180
+2   rat2    F    4      105
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item El \texttt{data frame} que quieres reordenar es el segundo argumento de \verb=match=
+\footnotesize
+\begin{verbatim}
+> cbind(ratas[match(ratasTabla$id, ratas$id),],ratasTabla)
+      id sexo peso longitud    id IDsecreto
+6   rat6    M   12      150  rat6         1
+9   rat9    M   19      190  rat9         2
+7   rat7    M    7      165  rat7         3
+3   rat3    F    1      115  rat3         4
+5   rat5    F   18       95  rat5         5
+1   rat1    F    2      100  rat1         6
+10 rat10    M   20      175 rat10         7
+4   rat4    F   11      130  rat4         8
+8   rat8    M   12      180  rat8         9
+2   rat2    F    4      105  rat2        10
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Combinando Dos Objectos: match, merge}
+\begin{itemize}
+\item Tambien podemos combinar los \texttt{data frames} usando la funcion \verb=merge=
+\footnotesize
+\begin{verbatim}
+> ratasMerge <- merge(ratas, ratasTabla, by.x="id", by.y="id")
+> ratasMerge[order(ratasMerge$IDsecreto),]
+      id sexo peso longitud IDsecreto
+7   rat6    M   12      150         1
+10  rat9    M   19      190         2
+8   rat7    M    7      165         3
+4   rat3    F    1      115         4
+6   rat5    F   18       95         5
+1   rat1    F    2      100         6
+2  rat10    M   20      175         7
+5   rat4    F   11      130         8
+9   rat8    M   12      180         9
+3   rat2    F    4      105        10
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Instalando Paquetes}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{R-logo.png}
+\end{figure}
+\textbf{Comprehensive R Archive Network (CRAN)}
+\begin{itemize}
+\item Principal repositorio de paquetes para R
+\item 5,800 paquetes y 120,000 funciones (Junio 2014)
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{BioClogo.png}
+\end{figure}
+\textbf{Bioconductor}
+\begin{itemize}
+\item Repositorio de paquetes para R
+\item Análisis de datos genómicos
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Instalando Paquetes}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.24]{GitHub-Logo.jpg}
+\end{figure}
+\textbf{GitHub}
+\begin{itemize}
+\item Repositorio popular para muchos proyectos open source
+\item Algunos paquetes de R
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Instalando Paquetes de GitHub}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.24]{GitHub-Logo.jpg}
+\end{figure}
+\begin{itemize}
+\item Necesitamos instalar primero \texttt{devtools}
+\begin{verbatim}
+install.packages("devtools")
+\end{verbatim}
+\item Vamos a instalar \texttt{dagdata} de GitHub
+\begin{verbatim}
+library(devtools)
+install_github("genomicsclass/dagdata")
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Instalando Paquetes de Bioconductor}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{BioClogo.png}
+\end{figure}
+\begin{itemize}
+\item Para instalar el paquete base de Bioconductor
+\begin{verbatim}
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+\end{verbatim}
+\item Para instalar un paquete de Bioconductor
+\begin{verbatim}
+source("http://bioconductor.org/biocLite.R")
+biocLite("NombreDelPaquete")
+\end{verbatim}
+\item Más información para instalar y actualizar paquetes de Bioconductor: 
+\url{http://bioconductor.org/install/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Instalando Paquetes}
+\begin{block}{Ejercicio}
+Instala los siguientes paquetes de Bioconductor
+\texttt{
+\begin{itemize}
+\item affy
+\item oligo
+\item GEOquery
+\item rae230a.db
+\item AnnotationDbi
+\item biomaRt
+\end{itemize}}
+\end{block}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.1]{laptop.jpeg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Instalando Paquetes}
+\begin{block}{Ejercicio}
+Carga el paquete \verb=affy=, y accede a su vignette.
+\end{block}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{laptop.jpeg}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{Vignettes}
+\begin{itemize}
+\item Documentos de ayuda para paquetes de R
+\item Requeridos para cada paquete de Bioconductor
+\item Manuales con ejemplos
+\item ¿Cuáles vignettes están disponibles?
+\begin{verbatim}
+vignette(package="Biobase")
+\end{verbatim}
+\item Accediendo al pdf
+\begin{verbatim}
+vignette("ExpressionSetIntroduction")
+\end{verbatim}
+\item Navegando las vignettes
+\begin{verbatim}
+browseVignettes(package="Biobase")
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+
+%\begin{frame}[fragile]{}
+%\end{frame}
+
+%
+%
+%\begin{frame}[fragile]{}
+%\begin{block}{Ejercicio}
+%
+%\end{block}
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.15]{laptop.jpeg}
+%\end{figure}
+%\end{frame}
+%
+%
+
+
+
+
+\end{document} 
+

@@ -1,0 +1,173 @@
+\documentclass{beamer}
+\usetheme{Boadilla} 
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{} 
+%\useoutertheme{infolines} 
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\setbeamertemplate{frametitle continuation}{} 
+\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{bm}
+\usepackage{epsfig}
+
+\usepackage{amsmath}
+\usepackage{xcolor,colortbl}
+
+\usepackage{multicol}
+\usepackage{wasysym}
+
+\usepackage{hyperref}
+\usepackage{float}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=1pt,
+      line width=0.5pt,
+      font=\scriptsize\sffamily
+    ](key) {#1\strut}
+  ;
+}
+
+% deal with spaces in absolute paths
+
+\usepackage[space]{grffile}
+\graphicspath{{C:/Users/Yered/Dropbox/Harvard/Winter 2014/CdeC/Slides/Introduction/figures/}}
+
+\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+
+
+\begin{document}
+\title[GSEA]{Explorando el Transcriptoma con Datos de Expresi\'{o}n Gen\'{e}tica\\
+\vspace{0.5cm}
+GSEA}
+\author{Yered Pita-Ju\'{a}rez}
+\institute[CdeC M\'{e}rida]{}
+\date{8/1/2015}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Gene Set Enrichment Analysis}
+\begin{itemize}
+\item Prueba de expresion diferencial usando grupos de genes
+\item La idea principal es usar grupos de genes pre definidos
+\item Definir los grupos de genes para ayudar a interpretar los resultados
+\item Analizar muestras del ALL
+\item leucemia linfoide aguda en celulas B
+\item Dos grupos: con on sin la mutación BCR/ABL
+\end{itemize}
+\footnotesize
+\begin{verbatim}
+library("ALL")
+data("ALL")
+bcell = grep("^B", as.character(ALL$BT))
+moltyp = which(as.character(ALL$mol.biol) %in% c("NEG", "BCR/ABL"))
+ALL_bcrneg = ALL[, intersect(bcell, moltyp)]
+ALL_bcrneg$mol.biol = factor(ALL_bcrneg$mol.biol)
+\end{verbatim}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Gene Set Enrichment Analysis}
+\begin{itemize}
+\item Filtrado: seleccionar los genes que estan por arriba del percentil del 50\% de la variabilidad
+\begin{verbatim}
+library("hgu95av2.db")
+library("genefilter")
+ALLfilt_bcrneg = nsFilter(ALL_bcrneg, var.cutoff=0.5)$eset
+\end{verbatim}
+\item KEGG: base de datos que contiene genes en rutas biologicas
+\item Definir los grupos de genes basados en rutas biologicas
+\begin{verbatim}
+library("GSEABase")
+gsc = GeneSetCollection(ALLfilt_bcrneg,
+                        setType=KEGGCollection())
+Am = incidence(gsc)
+dim(Am)
+nsF = ALLfilt_bcrneg[colnames(Am),]
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Gene Set Enrichment Analysis}
+\begin{itemize}
+\item Solo vamos a considerar las rutas biologicas con mas de 10 genes
+\begin{verbatim}
+selectedRows = (rowSums(Am)>10)
+Am2 = Am[selectedRows, ]
+\end{verbatim}
+\item Vamos a usar la prueba de GSEA
+\begin{verbatim}
+library("Category")
+set.seed(123)
+NPERM = 1000
+pvals = gseattperm(nsF, nsF$mol.biol, Am2, NPERM)
+pvalCut = 0.025
+lowC = names(which(pvals[, 1]<=pvalCut))
+highC = names(which(pvals[, 2]<=pvalCut))
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Gene Set Enrichment Analysis}
+\begin{itemize}
+\item Determinar el nombre de las rutas biologicas que tienen expression diferencial
+\begin{verbatim}
+library("KEGG.db")
+head(getPathNames(lowC))
+head(getPathNames(highC))
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{Ejercicio}
+Trata de interpretar las rutas biologicas que estan diferencialmente expresadas.
+\begin{verbatim}
+"Homologous recombination"
+"Ribosome"
+"Complement and coagulation cascades"
+"Lysosome"
+"Axon guidance"
+"Pathogenic Escherichia coli infection"
+"Shigellosis"
+"Viral myocarditis"
+\end{verbatim}
+\end{block}
+\end{frame}
+
+
+\end{document}
+
+\begin{frame}[fragile]{Gene Set Enrichment Analysis}
+\begin{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Comparaciones Múltiples}
+\end{frame}
+

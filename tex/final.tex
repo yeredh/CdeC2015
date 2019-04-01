@@ -1,0 +1,97 @@
+\documentclass{beamer}
+\usetheme{Boadilla} 
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{} 
+%\useoutertheme{infolines} 
+
+
+\usepackage{graphicx}
+
+\setbeamertemplate{frametitle continuation}{} 
+\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{xcolor,colortbl}
+
+\usepackage{multicol}
+\usepackage{wasysym}
+
+
+\DeclareMathOperator{\median}{median}
+\DeclareMathOperator{\cor}{cor}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+
+% deal with spaces in absolute paths
+\usepackage[space]{grffile}
+\graphicspath{{C:/Users/Yered/Dropbox/Harvard/Winter 2014/CdeC/Slides/Introduction/figures/}}
+
+\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+
+\def\mathrlap{\mathpalette\mathrlapinternal} 
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+%\usetikzlibrary{fit}
+%\tikzset{%
+%  highlight/.style={rectangle,fill=red!15,
+%    fill opacity=0.45,inner sep=0pt}
+%}
+%\newcommand{\tikzmark}[2]{\tikz[overlay,remember picture,
+%  baseline=(#1.base)] \node (#1) {#2};}
+%
+%\newcommand{\Highlight}[1][submatrix]{%
+%    \tikz[overlay,remember picture]{
+%    \node[highlight,fit=(left.north west) (right.south east)] (#1) {};}
+%}
+
+
+\begin{document}
+\title[Final]{Explorando el Transcriptoma con Datos de Expresi\'{o}n Gen\'{e}tica\\
+\vspace{0.5cm}
+Final}
+\author{Yered Pita-Ju\'{a}rez}
+\institute[CdeC M\'{e}rida]{}
+\date{9/1/2015}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Cursos en Línea}
+\begin{itemize}
+\item 7.00x: Introduction to Biology 7.00x (MITx)\\
+\url{https://courses.edx.org/courses/MITx/7.00x/2013_SOND}
+\item Coursera: R Programming\\
+\url{https://www.coursera.org/course/rprog}
+\item PH525x: Data Analysis for Genomics (HarvardX)\\
+\url{https://courses.edx.org/courses/HarvardX/PH525x/1T2014/}
+\end{itemize}
+\end{frame}
+\nocite{*}
+
+\begin{frame}[allowframebreaks]
+\frametitle{Libros}
+\small
+\bibliographystyle{authordate2}
+\bibliography{CdeC_refs}
+\end{frame}
+
+\begin{frame}{Contacto}
+Yered Pita-Juárez\\
+\texttt{ypitajuarez@fas.harvard.edu}\\
+\texttt{yered.h@gmail.com}\\
+\vspace{1cm}
+Ingrid Rodriguez Gutierrez\\
+\texttt{ingridrdz20@gmail.com}
+\end{frame}
+
+\end{document} 
